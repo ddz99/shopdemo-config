@@ -35,7 +35,7 @@ spec:
         syncOptions:
           - CreateNamespace=true
       source:
-        path: dev-kustomize/base
+        path: release
         repoURL: 'ssh://git@192.168.0.253:2224/david.duarte/multi-cloud-kubernetes.git'
         targetRevision: '{{.head_sha}}'
       destination:

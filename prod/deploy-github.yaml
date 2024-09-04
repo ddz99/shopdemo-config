@@ -7,15 +7,13 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
   - pullRequest:
-      gitlab:
-        # The GitLab project ID.
-        project: "344"
-        api: http://192.168.0.253:9090/
+      github:
+        # The GitHub repository owner and name.
+        owner: "ddz99"
+        repo: "shopdemo-config"
         tokenRef:
-          secretName: argo-gitlab
+          secretName: argo-github
           key: token
-        # If true, skips validating the SCM provider's TLS certificate - useful for self-signed certificates.
-        insecure: true
       requeueAfterSeconds: 2
   template:
     metadata:
@@ -29,10 +27,10 @@ spec:
         syncOptions:
           - CreateNamespace=true
       source:
-        path: kustomize/base
-        repoURL: 'ssh://git@192.168.0.253:2224/mck/multi-cloud-kubernetes.git'
+        path: kustomize
+        repoURL: 'https://github.com/ddz99/shopdemo-config.git'
         targetRevision: '{{.head_sha}}'
       destination:
         name: ''
-        namespace: dev-{{.author}}-{{.head_sha}}
+        namespace: dev-{{.head_sha}}
         server: 'https://kubernetes.default.svc'

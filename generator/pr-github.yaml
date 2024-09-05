@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapps
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      github:
+        # The GitHub repository owner and name.
+        owner: "ddz99"
+        repo: "shopdemo-config"
+        tokenRef:
+          secretName: argo-github
+          key: token
+      requeueAfterSeconds: 2
+  template:
+    metadata:
+      name: 'myapp-{{.branch}}-{{.number}}'
+    spec:
+      project: academy-demo
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      source:
+        path: kustomize
+        repoURL: 'https://github.com/ddz99/shopdemo-config.git'
+        targetRevision: '{{.head_sha}}'
+      destination:
+        name: ''
+        namespace: dev-{{.head_sha}}
+        server: 'https://kubernetes.default.svc'

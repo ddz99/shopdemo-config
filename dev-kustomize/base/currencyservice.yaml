@@ -60,10 +60,10 @@ spec:
             port: 7000
         resources:
           requests:
-            cpu: 100m
+            cpu: 200m
             memory: 64Mi
           limits:
-            cpu: 200m
+            cpu: 400m
             memory: 128Mi
 ---
 apiVersion: v1

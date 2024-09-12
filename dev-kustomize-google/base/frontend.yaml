@@ -19,7 +19,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -100,10 +100,10 @@ spec:
           #   value: "" # This value would look like "http://123.123.123"
           resources:
             requests:
-              cpu: 600m
+              cpu: 300m
               memory: 128Mi
             limits:
-              cpu: 1000m
+              cpu: 800m
               memory: 256Mi
 ---
 apiVersion: v1
